@@ -1,0 +1,15 @@
+# ROS
+build/
+devel/
+logs/
+.catkin_workspace
+*.pyc
+__pycache__/
+
+# Gazebo
+~gazebo/
+*.bag
+
+# IDE
+.vscode/
+.idea/
