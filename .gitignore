@@ -1,14 +1,13 @@
-# ROS
+# ROS build artifacts
 build/
 devel/
 logs/
-.catkin_workspace
 *.pyc
 __pycache__/
+.catkin_workspace
 
 # Gazebo
 ~gazebo/
-*.bag
 
 # IDE
 .vscode/
