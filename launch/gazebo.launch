@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- ========== ARGUMENTS ========== -->
+  <arg name="x"     default="0.0"/>
+  <arg name="y"     default="0.0"/>
+  <arg name="z"     default="0.1"/>
+  <arg name="world" default="worlds/empty.world"/>
+
+  <!-- ========== ROBOT DESCRIPTION ========== -->
+  <param name="robot_description"
+         command="$(find xacro)/xacro
+                  $(find hybrid_robot)/urdf/robot.xacro"/>
+
+  <!-- ========== GAZEBO ========== -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name"        value="$(arg world)"/>
+    <arg name="paused"            value="false"/>
+    <arg name="use_sim_time"      value="true"/>
+    <arg name="gui"               value="true"/>
+    <arg name="headless"          value="false"/>
+    <arg name="debug"             value="false"/>
+  </include>
+
+  <!-- ========== SPAWN ROBOT ========== -->
+  <node name="spawn_urdf"
+        pkg="gazebo_ros"
+        type="spawn_model"
+        args="-param robot_description
+              -urdf
+              -model hybrid_robot
+              -x $(arg x)
+              -y $(arg y)
+              -z $(arg z)"
+        output="screen"/>
+
+  <!-- ========== ROBOT STATE PUBLISHER ========== -->
+  <node name="robot_state_publisher"
+        pkg="robot_state_publisher"
+        type="robot_state_publisher"
+        output="screen">
+    <param name="publish_frequency" value="50.0"/>
+  </node>
+
+  <!-- ========== JOINT STATE PUBLISHER ========== -->
+  <node name="joint_state_publisher"
+        pkg="joint_state_publisher"
+        type="joint_state_publisher"
+        output="screen"/>
+
+</launch>
